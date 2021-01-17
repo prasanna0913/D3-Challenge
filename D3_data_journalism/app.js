@@ -76,9 +76,13 @@ function updateToolTip(chosenxAxis, circlesGroup) {
 
     if (chosenxAxis === "poverty") {
         var label = "Poverty:";
-    } else {
-        var label = "Age:"
     }
+    else if (chosenxAxis === "age") {
+        var label = "Age:";
+    } else {
+        var label = "Household Income:"
+    }
+
 
     var toolTip = d3.tip()
         .attr("class", "d3-tip")
@@ -110,7 +114,7 @@ d3.csv("data.csv").then(function (journalismData) {
         data.poverty = +data.poverty;
         // data.smokes = +data.smokes;
         data.age = +data.age;
-        // data.income = +data.income;
+        data.income = +data.income;
     });
 
     // xLinearScale function above csv import
@@ -181,6 +185,13 @@ d3.csv("data.csv").then(function (journalismData) {
         .attr("value", "age") // value to grab for event listener
         .classed("inactive", true)
         .text("Age(Median)");
+
+    var incomeLabel = labelsGroup.append("text")
+        .attr("x", 0)
+        .attr("y", 60)
+        .attr("value", "income") // value to grab for event listener
+        .classed("inactive", true)
+        .text("Household Income (Median)");
 
 
 
