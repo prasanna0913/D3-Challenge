@@ -19,3 +19,45 @@ var svg = d3.select("#scatter")
 
 var chartGroup = svg.append("g")
     .attr("transform", `translate(${margin.left}, ${margin.top})`);
+
+// Step 1: Parse Data/Cast as numbers
+// ==============================
+d3.csv("data.csv").then(function (journalismData) {
+    journalismData.forEach(function (data) {
+        data.healthcare = +data.healthcare;
+        data.poverty = +data.poverty;
+    });
+
+    // Step 2: Create scale functions
+    // ==============================
+    var xLinearScale = d3.scaleLinear()
+        .domain([8, d3.max(journalismData, d => d.poverty)])
+        .range([0, width]);
+
+    var yLinearScale = d3.scaleLinear()
+        .domain([0, d3.max(journalismData, d => d.healthcare)])
+        .range([height, 0]);
+
+    // Step 3: Create axis functions
+    // ==============================
+    var bottomAxis = d3.axisBottom(xLinearScale);
+    var leftAxis = d3.axisLeft(yLinearScale);
+
+
+
+
+
+
+}).catch(function (error) {
+    console.log(error);
+
+
+
+
+
+
+
+});
+
+
+
