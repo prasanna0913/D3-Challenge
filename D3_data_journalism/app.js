@@ -20,79 +20,65 @@ var svg = d3.select("#scatter")
 var chartGroup = svg.append("g")
     .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
+// Initial Params
+var chosenxAxis = "poverty";
+
+
+// function used for updating x-scale var upon click on axis label
+function xScale(peopledata, chosenxAxis) {
+    // create scales
+    var xLinearScale = d3.scaleLinear()
+        .domain([d3.min(peopledata, d => d[chosenxAxis]) * 0.8,
+        d3.max(peopledata, d => d[chosenxAxis]) * 1.2,
+        d3.max(peopledata, d => d[chosenxAxis]) * 1.6,
+
+        ])
+        .range([0, width]);
+
+    return xLinearScale;
+}
+
+// function used for updating xAxis var upon click on axis label
+function renderAxes(newXScale, xAxis) {
+    var bottomAxis = d3.axisBottom(newXScale);
+
+    xAxis.transition()
+        .duration(1000)
+        .call(bottomAxis);
+
+    return xAxis;
+}
+
 // Step 1: Parse Data/Cast as numbers
 // ==============================
 d3.csv("data.csv").then(function (journalismData) {
     journalismData.forEach(function (data) {
         data.healthcare = +data.healthcare;
         data.poverty = +data.poverty;
+        // data.smokes = +data.smokes;
+        data.age = +data.age;
+        // data.income = +data.income;
     });
 
-    // Step 2: Create scale functions
-    // ==============================
-    var xLinearScale = d3.scaleLinear()
-        .domain([8, d3.max(journalismData, d => d.poverty)])
-        .range([0, width]);
+    // xLinearScale function above csv import
+    var xLinearScale = xScale(journalismData, chosenxAxis);
 
+
+    // Create y scale function
     var yLinearScale = d3.scaleLinear()
         .domain([0, d3.max(journalismData, d => d.healthcare)])
         .range([height, 0]);
 
-    // Step 3: Create axis functions
-    // ==============================
+
+    // Create initial axis functions
     var bottomAxis = d3.axisBottom(xLinearScale);
     var leftAxis = d3.axisLeft(yLinearScale);
 
-    // Step 4: Append Axes to the chart
-    // ==============================
-    chartGroup.append("g")
+    // append x axis
+    var xAxis = chartGroup.append("g")
+        .classed("x-axis", true)
         .attr("transform", `translate(0, ${height})`)
         .call(bottomAxis);
-
-    chartGroup.append("g")
-        .call(leftAxis);
-
-    // Step 5: Create Circles
-    // ==============================
-    var circlesGroup = chartGroup.selectAll("circle")
-        .data(journalismData)
-        .enter()
-        .append("circle")
-        .attr("cx", d => xLinearScale(d.poverty))
-        .attr("cy", d => yLinearScale(d.healthcare))
-        .attr("r", "15")
-        .attr("fill", "red")
-        .attr("stroke-width", "1")
-        .attr("opacity", ".5")
-
-    // Step 6: Append text to Created Circles
-    // ==============================
-    chartGroup.append("g")
-        .selectAll("text")
-        .data(journalismData)
-        .enter()
-        .append("text").text(d => d.abbr)
-        .attr("x", d => xLinearScale(d.poverty))
-        .attr("y", d => yLinearScale(d.healthcare))
-        .attr("text-anchor", "middle")
-        .attr("alignment-baseline", "central")
-        .attr("font_family", "sans-serif")
-        .attr("font-size", "10px")
-        .attr("fill", "blue")
-        .style("font-weight", "bold");// Create axes labels
-
-    chartGroup.append("text")
-        .attr("transform", "rotate(-90)")
-        .attr("y", 0 - margin.left + 40)
-        .attr("x", 0 - (height / 2))
-        .attr("dy", "1em")
-        .attr("class", "axisText")
-        .text("Lacks Healthcare(%)");
-
-    chartGroup.append("text")
-        .attr("transform", `translate(${width / 2}, ${height + margin.top + 30})`)
-        .attr("class", "axisText")
-        .text("In Poverty(%)");
 
 
 }).catch(function (error) {
