@@ -18,7 +18,7 @@ var svg = d3.select("#scatter")
     .attr("height", svgHeight);
 
 var chartGroup = svg.append("g")
-    .attr("transform", `translate(${margin.left}, ${margin.top})`);
+    .attr("transform", `translate(${margin.left}, ${margin.top - 50})`);
 
 // Initial Params
 var chosenxAxis = "poverty";
@@ -134,7 +134,7 @@ d3.csv("data.csv").then(function (journalismData) {
     // append x axis
     var xAxis = chartGroup.append("g")
         .classed("x-axis", true)
-        .attr("transform", `translate(0, ${height - 30})`)
+        .attr("transform", `translate(0, ${height})`)
         .call(bottomAxis);
 
     // append y axis
@@ -170,25 +170,26 @@ d3.csv("data.csv").then(function (journalismData) {
 
     // Create group for two x-axis labels
     var labelsGroup = chartGroup.append("g")
-        .attr("transform", `translate(${width / 2}, ${height})`);
+        .attr("transform", `translate(${width / 2}, ${height})`)
+
 
     var povertyLabel = labelsGroup.append("text")
         .attr("x", 0)
-        .attr("y", 30)
+        .attr("y", 35)
         .attr("value", "poverty") // value to grab for event listener
         .classed("active", true)
         .text("In Poverty(%)");
 
     var ageLabel = labelsGroup.append("text")
         .attr("x", 0)
-        .attr("y", 60)
+        .attr("y", 55)
         .attr("value", "age") // value to grab for event listener
         .classed("inactive", true)
         .text("Age(Median)");
 
     var incomeLabel = labelsGroup.append("text")
         .attr("x", 0)
-        .attr("y", 80)
+        .attr("y", 75)
         .attr("value", "income") // value to grab for event listener
         .classed("inactive", true)
         .text("Household Income (Median)");
@@ -273,16 +274,8 @@ d3.csv("data.csv").then(function (journalismData) {
             }
         });
 
-
-
 }).catch(function (error) {
     console.log(error);
-
-
-
-
-
-
 
 });
 
