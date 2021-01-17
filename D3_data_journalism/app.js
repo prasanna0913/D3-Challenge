@@ -65,6 +65,25 @@ d3.csv("data.csv").then(function (journalismData) {
         .attr("stroke-width", "1")
         .attr("opacity", ".5")
 
+    // Step 6: Append text to Created Circles
+    // ==============================
+    chartGroup.append("g")
+        .selectAll("text")
+        .data(journalismData)
+        .enter()
+        .append("text").text(d => d.abbr)
+        .attr("x", d => xLinearScale(d.poverty))
+        .attr("y", d => yLinearScale(d.healthcare))
+        .attr("text-anchor", "middle")
+        .attr("alignment-baseline", "central")
+        .attr("font_family", "sans-serif")
+        .attr("font-size", "10px")
+        .attr("fill", "white")
+        .style("font-weight", "bold");
+
+
+
+
 
 
 
