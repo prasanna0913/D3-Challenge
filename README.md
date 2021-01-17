@@ -17,7 +17,7 @@
 
 # Features:
 * SVG provides different shapes like lines, rectangles, circles, ellipses etc. Hence, designing visualizations with SVG gives you more flexibility and power in what you can achieve.
-* Tooltips: There are two possible methods of creating tooltips in D3. js. The first method is by creating the SVG <title> tags as a descendant of an interactable element. The second approach is to use mouseover , mosueleave , and mousemove events to dynamically move and change the visibility of a tooltip.There are two possible methods of creating tooltips in D3. js. 
+* Tooltips: There are two possible methods of creating tooltips in D3. js. The first method is by creating the SVG <title> tags as a descendant of an interactable element. The second approach is to use mouseover , mosueout events to dynamically move and change the visibility of a tooltip.There are two possible methods of creating tooltips in D3. js. 
 * Transitions: Transition is the process of changing from one state to another of an item. This method supports most of the selection methods such as – attr(), style(), etc
 *	The data is initially plotted by taking Poverty(%) on x-axis and Lacks Healthcare(%) on y-axis.
 * Later, Age(Median), Household Income(Median) are also added on x-axis. Tooltips were added to circles and displayed the data based on the user selection.
