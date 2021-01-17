@@ -23,3 +23,13 @@
 *	The data is initially plotted by taking Poverty(%) on x-axis and Lacks Healthcare(%) on y-axis.
 * Later, Age(Median), Household Income(Median) are also added on x-axis. Tooltips were added to circles and displayed the data based on the user selection.
 * The x-axis scale is altered based on user selection and data is displayed on the chart. 
+
+# Setup:
+*	There was no specific setup done to work with D3.
+*	Visual studio code was used to write the index.html, app.js.
+
+# Status
+Project is finished
+
+# Contact
+D. Sai Prasanna
