@@ -43,6 +43,31 @@ d3.csv("data.csv").then(function (journalismData) {
     var bottomAxis = d3.axisBottom(xLinearScale);
     var leftAxis = d3.axisLeft(yLinearScale);
 
+    // Step 4: Append Axes to the chart
+    // ==============================
+    chartGroup.append("g")
+        .attr("transform", `translate(0, ${height})`)
+        .call(bottomAxis);
+
+    chartGroup.append("g")
+        .call(leftAxis);
+
+    // Step 5: Create Circles
+    // ==============================
+    var circlesGroup = chartGroup.selectAll("circle")
+        .data(journalismData)
+        .enter()
+        .append("circle")
+        .attr("cx", d => xLinearScale(d.poverty))
+        .attr("cy", d => yLinearScale(d.healthcare))
+        .attr("r", "15")
+        .attr("fill", "red")
+        .attr("stroke-width", "1")
+        .attr("opacity", ".5")
+
+
+
+
 
 
 
