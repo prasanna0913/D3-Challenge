@@ -243,9 +243,21 @@ d3.csv("data.csv").then(function (journalismData) {
                     ageLabel
                         .classed("active", false)
                         .classed("inactive", true);
+                    incomeLabel
+                        .classed("active", false)
+                        .classed("inactive", true);
 
 
-
+                } else if (chosenxAxis === "age") {
+                    povertyLabel
+                        .classed("active", false)
+                        .classed("inactive", true);
+                    ageLabel
+                        .classed("active", true)
+                        .classed("inactive", false);
+                    incomeLabel
+                        .classed("active", false)
+                        .classed("inactive", true);
                 }
                 else {
                     povertyLabel
@@ -254,14 +266,12 @@ d3.csv("data.csv").then(function (journalismData) {
                     ageLabel
                         .classed("active", false)
                         .classed("inactive", true);
-
+                    incomeLabel
+                        .classed("active", true)
+                        .classed("inactive", false);
                 }
             }
         });
-
-
-
-
 
 
 
