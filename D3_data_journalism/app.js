@@ -134,7 +134,7 @@ d3.csv("data.csv").then(function (journalismData) {
     // append x axis
     var xAxis = chartGroup.append("g")
         .classed("x-axis", true)
-        .attr("transform", `translate(0, ${height})`)
+        .attr("transform", `translate(0, ${height - 30})`)
         .call(bottomAxis);
 
     // append y axis
@@ -174,21 +174,21 @@ d3.csv("data.csv").then(function (journalismData) {
 
     var povertyLabel = labelsGroup.append("text")
         .attr("x", 0)
-        .attr("y", 20)
+        .attr("y", 30)
         .attr("value", "poverty") // value to grab for event listener
         .classed("active", true)
         .text("In Poverty(%)");
 
     var ageLabel = labelsGroup.append("text")
         .attr("x", 0)
-        .attr("y", 40)
+        .attr("y", 60)
         .attr("value", "age") // value to grab for event listener
         .classed("inactive", true)
         .text("Age(Median)");
 
     var incomeLabel = labelsGroup.append("text")
         .attr("x", 0)
-        .attr("y", 60)
+        .attr("y", 80)
         .attr("value", "income") // value to grab for event listener
         .classed("inactive", true)
         .text("Household Income (Median)");
