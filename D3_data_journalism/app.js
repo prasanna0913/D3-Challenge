@@ -164,6 +164,94 @@ d3.csv("data.csv").then(function (journalismData) {
         .attr("fill", "blue")
         .style("font-weight", "bold");
 
+    // Create group for two x-axis labels
+    var labelsGroup = chartGroup.append("g")
+        .attr("transform", `translate(${width / 2}, ${height})`);
+
+    var povertyLabel = labelsGroup.append("text")
+        .attr("x", 0)
+        .attr("y", 20)
+        .attr("value", "poverty") // value to grab for event listener
+        .classed("active", true)
+        .text("In Poverty(%)");
+
+    var ageLabel = labelsGroup.append("text")
+        .attr("x", 0)
+        .attr("y", 40)
+        .attr("value", "age") // value to grab for event listener
+        .classed("inactive", true)
+        .text("Age(Median)");
+
+
+
+    // append y axis
+    chartGroup.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 0 - margin.left)
+        .attr("x", 0 - (height / 1.5))
+        .attr("dy", "4em")
+        .classed("axis-text", true)
+        .text("Lacks Healthcare(%)");
+
+    // updateToolTip function above csv import
+    var circlesGroup = updateToolTip(chosenxAxis, circlesGroup);
+
+    // x axis labels event listener
+    labelsGroup.selectAll("text")
+        .on("click", function () {
+            // get value of selection
+            var value = d3.select(this).attr("value");
+            if (value !== chosenxAxis) {
+
+                // replaces chosenxAxis with value
+                chosenxAxis = value;
+
+                console.log(chosenxAxis)
+
+                // functions here found above csv import
+                // updates x scale for new data
+                xLinearScale = xScale(journalismData, chosenxAxis);
+
+                // updates x axis with transition
+                xAxis = renderAxes(xLinearScale, xAxis);
+
+                // updates circles with new x values
+                circlesGroup = renderCircles(circlesGroup, xLinearScale, chosenxAxis);
+
+                // updates text in circles  with new x values
+                circlesGroup = renderCirclesText(circlesGroup, xLinearScale, chosenxAxis);
+
+                // updates tooltips with new info
+                circlesGroup = updateToolTip(chosenxAxis, circlesGroup);
+
+                // changes classes to change bold text
+                if (chosenxAxis === "poverty") {
+                    povertyLabel
+                        .classed("active", true)
+                        .classed("inactive", false);
+                    ageLabel
+                        .classed("active", false)
+                        .classed("inactive", true);
+
+
+
+                }
+                else {
+                    povertyLabel
+                        .classed("active", false)
+                        .classed("inactive", true);
+                    ageLabel
+                        .classed("active", false)
+                        .classed("inactive", true);
+
+                }
+            }
+        });
+
+
+
+
+
 
 
 }).catch(function (error) {
